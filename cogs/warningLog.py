@@ -2,6 +2,7 @@ import asyncio
 import discord
 from discord.ext import commands
 from discord import Interaction, ui
+from ColorClass import Colors
 
 class WarningLog(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -32,7 +33,7 @@ class WarningLog(commands.Cog):
                         await interaction.response.send_message("유효한 사용자 ID를 입력하세요.", ephemeral=True)
                         return
 
-                    logEmbed = discord.Embed(title="처벌내역", description='　')
+                    logEmbed = discord.Embed(title="처벌내역", description='　', color=Colors.GREEN)
                     logEmbed.add_field(name="ID", value=f'{self.userID.value}', inline=False)
                     logEmbed.add_field(name='Name', value=f'{user.name}', inline=False)
                     logEmbed.add_field(name='Reason', value=f'{self.Reason.value}', inline=False)
