@@ -30,7 +30,7 @@ class Client(commands.Bot):
     async def setup_hook(self):
         try:
             for ext in self.initial_extensions:
-                if not self.extensions.get(ext):  # Cog가 이미 로드된 상태인지 확인
+                if not self.extensions.get(ext):
                     await self.load_extension(ext)
                     print(f"LOAD : {ext}")
                 else:
