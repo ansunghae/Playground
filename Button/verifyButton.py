@@ -23,11 +23,20 @@ class verify_button(discord.ui.View):
                         placeholder="",
                         required=True
                     )
+                    age = ui.TextInput(
+                          label="본인의 나이를 입력해주세요.",
+                          style=discord.TextStyle.short,
+                          placeholder="나이는 운영팀만 확인하며, 통계를 위해 집계합니다.",
+                          required=True
+                    )
                     async def on_submit(self, interaction: Interaction):
                         selfEmbed = discord.Embed(title=f'{self.name.value}님이 자기소개를 작성하셨어요!')
                         selfEmbed.add_field(name="　", value=f'{self.selfinfo.value}')
+
                         logEmbed = discord.Embed(title="자기소개 작성로그")
-                        logEmbed.add_field(name='　', value=f'{interaction.user.mention}님이 자기소개를 작성하셨습니다.')
+                        logEmbed.add_field(name='　', value=f'{interaction.user.mention}님이 자기소개를 작성하셨습니다.', inline=False)
+                        logEmbed.add_field(name='내용', value=f'{self.selfinfo.value}', inline=False)
+                        logEmbed.add_field(name='나이', value=f'{self.age.value}', inline=False)
 
 
                         await interaction.user.edit(nick=f'{self.name.value}')
