@@ -2,7 +2,8 @@ from ast import Delete
 import asyncio
 import discord, os
 from discord.ext import commands
-from discord import Interaction, ui
+from discord import Color, Interaction, ui
+from ColorClass import Colors
 
 class reportEnd(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -12,15 +13,19 @@ class reportEnd(commands.Cog):
     async def reportEnd_command(self, interaction: Interaction):
         if interaction.user.guild_permissions.administrator:
             if interaction.channel.category_id == 1247872882701242378:
-                reportEmbed = discord.Embed(title="문의종료", description="　")
+                reportEmbed = discord.Embed(title="문의종료", description="　", color=Colors.GREEN)
                 reportEmbed.add_field(name='　', value='문의가 종료되었습니다.')
                 await interaction.channel.send(embed=reportEmbed)
                 await asyncio.sleep(5)
                 await interaction.channel.delete()
             else:
-                await interaction.response.send_message("아니 등신아 그걸 왜 여기서 쳐 씀?", ephemeral=True)
+                errorEmbed = discord.Embed(title='Error', description='　', color=Colors.RED)
+                errorEmbed.add_field(name='　', value='이 채널에선 사용할 수 없습니다.')
+                await interaction.response.send_message(embed=errorEmbed, ephemeral=True)
         else:
-            await interaction.response.send_message("권한이 없습니다.", ephemeral=True)
+            errorEmbed = discord.Embed(title='Error', description='　', color=Colors.RED)
+            errorEmbed.add_field(name='　', value='권한이 없습니다.')
+            await interaction.response.send_message(embed=errorEmbed, ephemeral=True)
 
                 
 
