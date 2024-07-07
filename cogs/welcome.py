@@ -19,7 +19,7 @@ class Welcome(commands.Cog):
         SvMessage = discord.Embed(title="👋 환영합니다", description='　', color=Colors.GREEN) # 환영채널 메시지 전송
         SvMessage.add_field(name='　',value="새로운분이 서버에 가입했어요!")
         SvMessage.set_footer(text="다들 뉴하를 외쳐주세요!")
-        welcomeChannel = guild.get_channel(int(WelcomeChannel))
+        welcome_Channel = guild.get_channel(int(WelcomeChannel))
 
         ChMessage = discord.Embed(title=f'{member.display_name}님이 서버에 들어왔어요!', description='모두들 뉴하를 외쳐주세요!', color=0x00ff00) # 자유채팅 메시지 전송 
         public_Channel = guild.get_channel(PublicChannel)
