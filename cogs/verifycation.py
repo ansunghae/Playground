@@ -1,6 +1,7 @@
 import discord, os
 from discord.ext import commands
 from discord import Interaction, ui
+from ColorClass import Colors
 
 from Button.roleButton import voice_room
 from Button.reportButton import report_button
@@ -47,25 +48,25 @@ class verifycation(commands.Cog):
     #     else:
     #         await interaction.response.send_message("권한이 없습니다.", ephemeral=True)
 
-    @discord.app_commands.command(name="인증", description="놀이터서버에서 활동하기위한 인증을 하는 기능입니다.")
-    async def verifycation_command(self, interaction: Interaction):
-        if not interaction.user.get_role(963749174053052456):
-            if interaction.channel_id == 972334185677221898:
-                class VerifyModal(ui.Modal, title="인증하기"):
-                    WhereJoin = ui.TextInput(
-                        label="입장경로를 적어주세요 (필수X)",
-                        style=discord.TextStyle.short,
-                        placeholder="디스보드, 디코올, 타서버홍보 등",
-                        required=False
+    @discord.app_commands.command(name="인증", description="놀이터서버에서 활동하기위한 인증을 하는 기능입니다.") #인증에 대한 슬래쉬 커맨드 및 설명
+    async def verifycation_command(self, interaction: Interaction): 
+        if not interaction.user.get_role(963749174053052456): #만약에 이 역할이 없다면
+            if interaction.channel_id == 972334185677221898: #만약에 이채널이라면
+                class VerifyModal(ui.Modal, title="인증하기"): #임베드 인증하기 제목
+                    WhereJoin = ui.TextInput( #모달 이름 
+                        label="입장경로를 적어주세요 (필수X)", #모달 라벨에 입장 경로를 적어주세요 
+                        style=discord.TextStyle.short, #모달의 텍스트 스타일을 숏으로 정의
+                        placeholder="디스보드, 디코올, 타서버홍보 등", #설명
+                        required=False #필수 아님
                     )
-                    ok = ui.TextInput(
-                        label="규칙을 모두 읽으셨으면, '동의합니다' 를 입력하세요",
-                        style=discord.TextStyle.short,
-                        placeholder="동의합니다"
-                    )
-                    async def on_submit(self, interaction: Interaction):
-                        if self.ok.value == '동의합니다':
-                            verifyEmbed = discord.Embed(title="인증완료",description='　', color=0x00ff00)
+                    ok = ui.TextInput( #모달 이름
+                        label="규칙을 모두 읽으셨으면, '동의합니다' 를 입력하세요", #모달 제목
+                        style=discord.TextStyle.short, #모달의 텍스트 스타일을 숏으로 정의
+                        placeholder="동의합니다" #모달의 설명
+                    ) 
+                    async def on_submit(self, interaction: Interaction): 
+                        if self.ok.value == '동의합니다': 
+                            verifyEmbed = discord.Embed(title="인증완료",description='　', color=Colors.GREEN)
                             verifyEmbed.add_field(name='　', value="인증이 완료되었습니다.\n역할이 자동으로 지급됩니다.")
                             await interaction.response.send_message(embed=verifyEmbed, ephemeral=True)
                             await interaction.user.add_roles(interaction.guild.get_role(963749174053052456))
@@ -76,18 +77,18 @@ class verifycation(commands.Cog):
                             await interaction.guild.get_channel(986194109318438962).send(embed=verifyLogEmbed)
         
                         else:
-                            verifyEmbed = discord.Embed(title="인증실패",description='　', color=0xff0000)
+                            verifyEmbed = discord.Embed(title="인증실패",description='　', color=Colors.RED)
                             verifyEmbed.add_field(name='　', value="인증을 실패했습니다.\n인증을 다시 진행해주세요.")
                             await interaction.response.send_message(embed=verifyEmbed, ephemeral=True)
                 await interaction.response.send_modal(VerifyModal())
         
             else:
-                errorEmbed = discord.Embed(title="에러",description='　', color=0xff0000)
+                errorEmbed = discord.Embed(title="에러",description='　', color=Colors.RED)
                 errorEmbed.add_field(name='　', value="채널이 올바르지 않습니다.")
                 await interaction.response.send_message(embed=errorEmbed, ephemeral=True)
         
         else:
-            errorEmbed = discord.Embed(title="에러",description='　', color=0xff0000)
+            errorEmbed = discord.Embed(title="에러",description='　', color=Colors.RED)
             errorEmbed.add_field(name='　', value="이미 인증이 되어있습니다.")
             await interaction.response.send_message(embed=errorEmbed, ephemeral=True)
                 
